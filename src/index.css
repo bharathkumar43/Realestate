@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: clip;
+  }
+  body {
+    @apply bg-violet-50 font-sans text-slate-800 antialiased;
+    overflow-x: clip;
+  }
+}
+
+@layer components {
+  .field {
+    @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-normal text-slate-800 outline-none transition focus:border-violet-500 focus:ring-4 focus:ring-violet-100;
+  }
+  .label {
+    @apply flex flex-col gap-1 text-sm font-medium text-slate-700;
+  }
+  .card {
+    @apply rounded-3xl bg-white p-5 ring-1 ring-slate-200 sm:p-6;
+  }
+  .card-title {
+    @apply text-lg font-semibold text-night-900;
+  }
+  .btn-primary {
+    @apply rounded-full bg-violet-600 px-6 py-3 text-center font-semibold text-white shadow-lg shadow-violet-500/20 transition hover:bg-violet-700 disabled:cursor-wait disabled:opacity-60;
+  }
+  .filter-select {
+    @apply w-full rounded-2xl bg-violet-50 px-3 py-2.5 text-sm text-slate-700 outline-none md:w-auto;
+  }
+}
+
+/* Leaflet sits under our fixed UI */
+.leaflet-container {
+  z-index: 0;
+  font-family: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
