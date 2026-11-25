@@ -93,6 +93,14 @@ drop policy if exists "admin write profile" on public.agent_profile;
 create policy "admin write profile" on public.agent_profile for all to authenticated
   using (public.is_admin()) with check (public.is_admin());
 
+-- ---------- API access (needed when "Grant API access to new tables
+-- automatically" is off). RLS above still decides who may change what. ----------
+grant usage on schema public to anon, authenticated;
+grant select on public.plots, public.plot_images, public.agent_profile to anon, authenticated;
+grant insert, update, delete on public.plots, public.plot_images, public.agent_profile to authenticated;
+grant select on public.admins to authenticated;
+grant execute on function public.is_admin() to anon, authenticated;
+
 -- ---------- Image storage ----------
 insert into storage.buckets (id, name, public)
 values ('plot-images', 'plot-images', true)
