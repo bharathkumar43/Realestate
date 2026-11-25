@@ -16,6 +16,13 @@ export default function Home() {
   const available = plots.filter((p) => p.status !== 'sold');
   const featured = (available.filter((p) => p.featured).length ? available.filter((p) => p.featured) : available).slice(0, 3);
   const cities = new Set(plots.map((p) => p.location)).size;
+  // Profile counters are hidden while they are 0, so a new profile doesn't show "0+ plots sold"
+  const stats = [
+    { n: available.length, label: 'Plots available', suffix: '' },
+    { n: cities, label: 'Locations', suffix: '' },
+    { n: profile.plots_sold, label: 'Plots sold', suffix: '+', hideIfZero: true },
+    { n: profile.experience_years, label: 'Years experience', suffix: '+', hideIfZero: true },
+  ].filter((s) => !(s.hideIfZero && !s.n));
 
   return (
     <>
@@ -85,13 +92,8 @@ export default function Home() {
 
       {/* Stats */}
       <section className="relative z-10 mx-auto -mt-14 max-w-5xl px-4">
-        <div className="grid grid-cols-2 gap-3 rounded-3xl bg-white p-6 shadow-xl ring-1 ring-violet-100 sm:grid-cols-4">
-          {[
-            { n: available.length, label: 'Plots available' },
-            { n: cities, label: 'Locations' },
-            { n: profile.plots_sold, label: 'Plots sold', suffix: '+' },
-            { n: profile.experience_years, label: 'Years experience', suffix: '+' },
-          ].map((s) => (
+        <div className={`grid grid-cols-2 gap-3 rounded-3xl bg-white p-6 shadow-xl ring-1 ring-violet-100 ${stats.length === 4 ? 'sm:grid-cols-4' : 'sm:grid-cols-3'}`}>
+          {stats.map((s) => (
             <div key={s.label} className="text-center">
               <p className="text-3xl font-bold text-violet-700 sm:text-4xl">
                 <Counter to={s.n} suffix={s.suffix} />

@@ -8,6 +8,12 @@ import { instagramLink, telLink, whatsappLink } from '../lib/contact';
 export default function About() {
   const { profile, plots } = useData();
   const available = plots.filter((p) => p.status === 'available').length;
+  // Years and plots sold are hidden while 0; "Available now" always shows
+  const aboutStats = [
+    { n: profile.experience_years, s: '+', l: 'Years' },
+    { n: profile.plots_sold, s: '+', l: 'Plots sold' },
+    { n: available, s: '', l: 'Available now', always: true },
+  ].filter((x) => x.always || x.n > 0);
 
   const contacts = [
     profile.whatsapp && {
@@ -62,12 +68,8 @@ export default function About() {
       </section>
 
       <section className="relative z-10 mx-auto -mt-12 max-w-5xl px-4">
-        <div className="grid grid-cols-3 gap-3 rounded-3xl bg-white p-6 text-center shadow-xl ring-1 ring-violet-100">
-          {[
-            { n: profile.experience_years, s: '+', l: 'Years' },
-            { n: profile.plots_sold, s: '+', l: 'Plots sold' },
-            { n: available, s: '', l: 'Available now' },
-          ].map((x) => (
+        <div className={`grid gap-3 rounded-3xl bg-white p-6 text-center shadow-xl ring-1 ring-violet-100 ${aboutStats.length === 3 ? 'grid-cols-3' : aboutStats.length === 2 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+          {aboutStats.map((x) => (
             <div key={x.l}>
               <p className="text-3xl font-bold text-violet-700"><Counter to={x.n} suffix={x.s} /></p>
               <p className="text-xs text-slate-500 sm:text-sm">{x.l}</p>

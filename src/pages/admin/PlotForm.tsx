@@ -9,7 +9,8 @@ import type { AreaUnit, DraftImage, PlotFields, PlotStatus } from '../../lib/typ
 
 const PlotMap = lazy(() => import('../../components/PlotMap'));
 
-const DEFAULT_CENTER = { lat: 17.385, lng: 78.4867 }; // Hyderabad
+// Where the pin picker opens for a new plot: Bhogapuram airport, between Vizag and Vizianagaram
+const DEFAULT_CENTER = { lat: 18.03, lng: 83.49 };
 const FACINGS = ['East', 'West', 'North', 'South', 'North-East', 'North-West', 'South-East', 'South-West'];
 
 const empty: PlotFields = {
